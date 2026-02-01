@@ -1,37 +1,67 @@
 import { StatusBar } from 'expo-status-bar';
-import { StyleSheet, Text, View } from 'react-native';
+import { StyleSheet, Text, View} from 'react-native';
 import CustomButton from './src/components/CustomButton';
 
 export default function App() {
-  const handleOnLogin = () =>{
-      console.log("Prueba login desde esta App");
-      alert("Alerta login desde App")
+  const handleOnLogin = () => {
+    console.log("prueba login desde app");
+    alert("Alerta login desde app");
   }
 
-  const handleOnLogout = () =>{
-      console.log("Prueba logout desde esta App");
-      alert("Alerta logout desde App")
+  const handleOnLogout = () => {
+    alert("Alerta logout desde app");
+  }
+
+    const handleOnForgetPassword = () => {
+    alert("Cargando...");
   }
 
   return (
     <View style={styles.container}>
-      <Text>Bienvenido!</Text>
+      <Text>Bienvenido</Text>
       <StatusBar style="auto" />
-      <CustomButton 
-      title={'Login'} 
-      onClick={handleOnLogin}/>
-       <CustomButton 
-      title={'Logout'} 
-      onClick={handleOnLogout}/>
-    </View>
-  );
+      <View style={styles.buttonsWrapper}>
+        <View style={styles.card}>
+        <CustomButton 
+            title={'Login'} 
+            onClick={handleOnLogin} 
+            />
+        <CustomButton 
+            title={'Salir'}
+            onClick={handleOnLogout}
+            variant={'secondary'} 
+            />
+        <CustomButton 
+            title={'¿Olvidaste tu contraseña?'}
+            onClick={handleOnForgetPassword}
+            variant={'text'} 
+            />       
+          </View>  
+        </View>
+      </View>
+);
 }
 
 const styles = StyleSheet.create({
   container: {
     flex: 1,
-    backgroundColor: '#04a9f5',
     alignItems: 'center',
     justifyContent: 'center',
   },
+  card:{
+    width: "80%",
+    height: "80%",
+    borderRadius: 15,
+    backgroundColor:'#f3f4f6',
+    alignItems: "center",
+    justifyContent: "space-around",
+  },
+  buttonsWrapper:{
+//    marginTop: 15,
+    width: "70%",
+   height: "30%",
+    alignItems: "center",
+
+  },
+
 });
