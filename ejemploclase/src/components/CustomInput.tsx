@@ -4,16 +4,20 @@ import { useState } from "react";
 
 type Props ={
     placeholder: string,
-    onChange: () => void,
+    onChange: (text: string) => void,
     value: string,
-    typeInput: 'password' | 'email' | 'numeric' | 'text',
+    typeInput: 'password' | 'email' | 'numeric' | 'text';
 }
 export default function CustomInput ({placeholder, onChange, value, typeInput}:Props){
 //uso de variables en el estado local
         //sintaxis:
         //[nombreDeVariable,Funcion] = useState(<valorInicial>)
-    const [isSecureText, setIsSecureText] = useState(true);
-    
+    const [isSecureText, setIsSecureText] = useState(typeInput === 'password');
+    const isPasswordField = typeInput === 'password';
+
+    const icon : typeof MaterialIcons["name"] | undefined = 
+        typeInput === "email" ? "email": 
+            typeInput === "password" ? "lock" : undefined
 
     return(
         //Wrapper
@@ -21,29 +25,22 @@ export default function CustomInput ({placeholder, onChange, value, typeInput}:P
             <View style={styles.inputContainer}>
                 {/*inputContainer*/}
                 <MaterialIcons 
-                    name={"lock"}
+                    name={icon}
                     size={20}
                     color={"#000000"}
                 />
                 <TextInput
-                    placeholder={"email"}
-                    value={""}
-                    onChangeText={()=>{}}
+                    style={styles.input}
                     placeholder={placeholder}
                     value={value}
                     onChangeText={onChange}
                     secureTextEntry={isSecureText}
                 />
-                <Ionicons name={"eye"} size={20}/>
-                <TouchableOpacity
-                onPress={
-                    ()=>{
-
-                    }
-                
-                }>
-                    <Ionicons name={"eye"} size={20}/>
-                </TouchableOpacity>
+                {isPasswordField &&  
+                    <TouchableOpacity onPress={()=>{setIsSecureText(!isSecureText)}}>
+                        <Ionicons name={isSecureText ? "eye" : "eye-off"} size={20}/> 
+                    </TouchableOpacity>
+                }
                 
             </View>
             <Text>*Campo Requerido</Text>
@@ -60,12 +57,15 @@ const styles = StyleSheet.create({
     inputContainer:{
         flexDirection:'row',
         alignItems:'center',
-        justifyContent:'space-between',
 
         borderWidth: 1,
         borderColor: "#ccc",
         borderRadius: 6,
         paddingHorizontal: 15,
+    },
+    input:{
+        paddingHorizontal:10,
+        width:'80%',
     }
 
 
