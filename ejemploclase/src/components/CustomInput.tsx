@@ -6,10 +6,10 @@ type Props = {
     placeholder: string,
     onChange: (text: string) => void;
     value: string;
-    typeInput : 'password' | 'email' | 'number' | 'text';
+    typeInput?: 'password' | 'email' | 'number' | 'text';
     
 }
-export default function CustomInput ({placeholder, onChange, value, typeInput}:Props){
+export default function CustomInput ({placeholder, onChange, value, typeInput='text'}:Props){
 //uso de variables en el estado local
         //sintaxis:
         //[nombreDeVariable, funcion] = useState(<valorInicial>);
@@ -38,7 +38,7 @@ export default function CustomInput ({placeholder, onChange, value, typeInput}:P
         //wrapper
         <View style={styles.wrapper}>
             {/* //inputContainer */}
-            <View style={styles.inputContainer}>
+            <View style={[styles.inputContainer, error && styles.inputContainer]}>
                 <MaterialIcons 
                     name={icon}
                     size={20}
@@ -60,7 +60,7 @@ export default function CustomInput ({placeholder, onChange, value, typeInput}:P
             }
             
             </View>
-            {error && <Text> {error} </Text>}
+            {error && <Text style={styles.inputError}> {error} </Text>}
         </View>
     );
 }
@@ -83,5 +83,10 @@ const styles = StyleSheet.create({
     input:{
         paddingHorizontal:10,
         width:'80%'
+    },
+
+    inputError:{
+        borderColor: 'red',
+        color: 'red'
     }
 });
