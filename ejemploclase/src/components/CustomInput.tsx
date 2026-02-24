@@ -9,7 +9,7 @@ type Props = {
     typeInput?: 'password' | 'email' | 'number' | 'text';
     
 }
-export default function CustomInput ({placeholder, onChange, value, typeInput='text'}:Props){
+export default function CustomInput ({placeholder, onChange, value, typeInput="text"}:Props){
 //uso de variables en el estado local
         //sintaxis:
         //[nombreDeVariable, funcion] = useState(<valorInicial>);
@@ -20,25 +20,27 @@ export default function CustomInput ({placeholder, onChange, value, typeInput='t
         typeInput === "email" ? "email" : 
             typeInput === "password" ? "lock" : undefined
 
-
+//numeric
+//default
     const keyboardType: KeyboardTypeOptions = 
     typeInput === "email" ? "email-address" :
-           typeInput === "number" ? "numeric" : "default" 
-           
-    const getError=()=>{
-        if(typeInput === "email" && !value.includes('@')) 
-            return 'Correo invalido';
-        if(typeInput === 'password' && value.length <6)
-            return 'Contraseña debe ser mas fuerte';
-    }
+           typeInput === "number" ? "numeric" : "default"   
+
+
+    const getError = () =>{
+        if (typeInput === "email" && !value.includes('@'))
+            return 'Correo Invalido';
+        if (typeInput === 'password' && value.length < 6)
+            return 'La contraseña debe ser mas fuerte';
+
+    };
 
     const error = getError();
-
     return(
         //wrapper
         <View style={styles.wrapper}>
             {/* //inputContainer */}
-            <View style={[styles.inputContainer, error && styles.inputContainer]}>
+            <View style={[styles.inputContainer, error && styles.inputError]}>
                 <MaterialIcons 
                     name={icon}
                     size={20}
@@ -60,7 +62,7 @@ export default function CustomInput ({placeholder, onChange, value, typeInput='t
             }
             
             </View>
-            {error && <Text style={styles.inputError}> {error} </Text>}
+            {error && <Text style={[styles.inputError]}>{error}</Text>}
         </View>
     );
 }
@@ -84,9 +86,8 @@ const styles = StyleSheet.create({
         paddingHorizontal:10,
         width:'80%'
     },
-
     inputError:{
         borderColor: 'red',
-        color: 'red'
+        color:'red',
     }
 });

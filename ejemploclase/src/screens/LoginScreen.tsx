@@ -3,15 +3,22 @@ import CustomButton from "../components/CustomButton";
 import CustomInput from "../components/CustomInput";
 import { useState } from "react";
 
-export default function LoginScreen() {
+export default function LoginScreen({navigation}:any) {
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
 
   
 
   const handleOnLogin = () => {
-    console.log("prueba login desde app");
-    alert("Alerta login desde app");
+    //navegar a una pantalla dentro del mismo stack navigator
+    // navigation.navigate("Home")
+    
+
+     //navegar a una pantalla que espera parametros por ruta dentro del mismo stack navigator 
+    // navigation.navigate("Home", {email})
+
+    //navegar a una tab especifica
+    navigation.navigate("Tabs", {screen:"Home"})
   }
 
   const handleOnLogout = () => {
