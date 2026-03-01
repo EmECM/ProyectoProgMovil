@@ -12,9 +12,11 @@ type AuthContextType = {
     //login: (email: string, password: string)=>Promise<void>;
     login: (email: string, password: string)=>boolean;
     //register: (email: string, password: string)=>Promise<void>;
-    register: (email: string, password: string)=>boolean;
-    logout: ()=>{};
+    //register: (email: string, password: string)=>boolean;
+    logout: ()=>void;
 }
+
+//COMIENZO DE API CONTEXT
 
 //1. Definir contexto
 const AuthContext = createContext<AuthContextType | null>(null)
@@ -22,10 +24,12 @@ const AuthContext = createContext<AuthContextType | null>(null)
 //2. Utilizar el contexto: Hook personalizado
 export const useAuth = () => {
     const context = useContext(AuthContext);
-
+    if(!context) throw new Error ('useAuth debe usarse dentro del AuthProvider');
+    return context;
 };
 
 //3. definicion de Context Provider
+//apartir de authprovider el estado del componente se convierte en un estado global 
 export const AuthProvider = ({children}: {children: React.ReactNode})=>{
     const[user, setUser] = useState<User>(null);
     const[isAllowed, setisAllowed] = useState<boolean>(false);
@@ -39,8 +43,15 @@ export const AuthProvider = ({children}: {children: React.ReactNode})=>{
         return allowed;
     }
 
-    return{
-        <AuthContext.Provider value={{}}>
+    const logout = ()=>{
+        setUser(null);
+        setisAllowed(false);
+    };
+    
+
+    return(
+        <AuthContext.Provider value={{user, isAllowed, login, logout}}>
+            {children}
         </AuthContext.Provider>
-    }
+    )
 }

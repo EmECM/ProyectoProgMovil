@@ -1,24 +1,36 @@
-import { StyleSheet, Text, View} from 'react-native';
+import { StyleSheet, Text, View, Alert} from 'react-native';
 import CustomButton from "../components/CustomButton";
 import CustomInput from "../components/CustomInput";
 import { useState } from "react";
+import { useAuth } from '../contexts/AuthContext';
 
 export default function LoginScreen({navigation}:any) {
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
 
-  
+  const {login, isAllowed} = useAuth();  
 
   const handleOnLogin = () => {
+
+    try {
     //navegar a una pantalla dentro del mismo stack navigator
     // navigation.navigate("Home")
     
-
-     //navegar a una pantalla que espera parametros por ruta dentro del mismo stack navigator 
+    //navegar a una pantalla que espera parametros por ruta dentro del mismo stack navigator 
     // navigation.navigate("Home", {email})
 
+    const allowed = login(email,password)
+    if(allowed){
     //navegar a una tab especifica
     navigation.navigate("Tabs", {screen:"Home"})
+    }else{
+      Alert.alert("Credenciales Incorrectas","Favor ingresar correo.edu")
+    }
+      
+    } catch (error: any) {
+      Alert.alert(error.message)
+    }
+  
   }
 
   const handleOnLogout = () => {
