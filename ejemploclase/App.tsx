@@ -1,22 +1,21 @@
-import { NavigationContainer } from '@react-navigation/native';
-import {View} from 'react-native';
-import StackNavigator from './src/components/navigation/StackNavigator';
-import { AuthProvider } from './src/contexts/AuthContext';
-import { LanguageProvider } from './src/contexts/LanguageContext';
-
+import { NavigationContainer } from '@react-navigation/native'
+import StackNavigator from './src/navigation/StackNavigator'
+import { AuthProvider } from './src/contexts/AuthContext'
+import { LanguageProvider } from './src/contexts/LanguageContext'
+import { Provider } from 'react-redux'
+import { store } from './src/store'
 
 export default function App() {
-
   return (
+    <Provider store={store}>
     <LanguageProvider>
-      //auth context
       <AuthProvider>
         <NavigationContainer>
-          <StackNavigator/>
+          <StackNavigator />
         </NavigationContainer>
       </AuthProvider>
-  </LanguageProvider>
-  );
+    </LanguageProvider>
+    </Provider>
 
+  )
 }
-
